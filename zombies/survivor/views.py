@@ -11,8 +11,8 @@ def survivor_list(request):
     List all survivors, or create a new snippet.
     """
     if request.method == 'GET':
-        snippets = Survivor.objects.all()
-        serializer = SurvivorSerializer(snippets, many=True)
+        survivors = Survivor.objects.all()
+        serializer = SurvivorSerializer(survivors, many=True)
         return JsonResponse(serializer.data, safe=False)
     
     if request.method == 'POST':
@@ -34,12 +34,12 @@ def survivor_detail(request, pk):
         return HttpResponse(status=404)
 
     if request.method == 'GET':
-        serializer = SurvivorSerializer(Survivor)
-        return JsonResponse(serializer.data)
+        serializer = SurvivorSerializer(survivor)
+        return JsonResponse(serializer.data, safe=False)
 
     elif request.method == 'PUT':
         data = JSONParser().parse(request)
-        serializer = SurvivorSerializer(Survivor, data=data)
+        serializer = SurvivorSerializer(survivor, data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data)

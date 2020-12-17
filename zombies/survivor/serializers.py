@@ -16,22 +16,24 @@ class SurvivorSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         """
-        Create and return a new `Survivor` instance, given the validated data.
+            Create and return a new `Survivor` instance, given the validated data.
         """
         validated_data['localization'] = Point(float(validated_data['longitude']), 
                                                 float(validated_data['latitude']))
         return Survivor.objects.create(**validated_data)
 
-    '''
     def update(self, instance, validated_data):
         """
-        Update and return an existing `Snippet` instance, given the validated data.
+            Update and return an existing `Survivor` instance, given the validated data.
         """
-        instance.title = validated_data.get('title', instance.title)
-        instance.code = validated_data.get('code', instance.code)
-        instance.linenos = validated_data.get('linenos', instance.linenos)
-        instance.language = validated_data.get('language', instance.language)
-        instance.style = validated_data.get('style', instance.style)
+        latitude = validated_data.get('latitude', instance.latitude)
+        longitude = validated_data.get('longitude', instance.longitude)
+
+        instance.name = validated_data.get('name', instance.name)
+        instance.gender = validated_data.get('gender', instance.gender)
+        instance.latitude = latitude
+        instance.longitude = longitude
+        instance.localization = Point(float(longitude), float(latitude))
         instance.save()
         return instance
-    '''
+    
