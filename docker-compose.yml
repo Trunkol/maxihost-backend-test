@@ -13,7 +13,9 @@ services:
     depends_on:
       - db
   db:
-    image: postgres:12.0-alpine
+    image: postgis/postgis
+    ports:
+      - 5431:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
