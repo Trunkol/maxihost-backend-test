@@ -2,7 +2,7 @@ from rest_framework import serializers
 from survivor.models import Survivor
 from django.contrib.gis.geos import Point
 
-class SurvivorSerializer(serializers.Serializer):
+class SurvivorSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(required=True)
     gender = serializers.CharField(required=True)
@@ -13,6 +13,8 @@ class SurvivorSerializer(serializers.Serializer):
     
     class Meta:
         model = Survivor
+        fields = '__all__'
+
 
     def create(self, validated_data):
         """
