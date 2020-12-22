@@ -1,28 +1,32 @@
 from rest_framework import serializers
 from survivor.models import Survivor
 from django.contrib.gis.geos import Point
+from django.contrib.auth.models import User
 
-class SurvivorSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(read_only=True)
+class SurvivorSerializer(serializers.Serializer):
     name = serializers.CharField(required=True)
     gender = serializers.CharField(required=True)
-    infected = serializers.BooleanField(required=False)
     latitude = serializers.DecimalField(required=True, decimal_places=3, max_digits=10)
     longitude = serializers.DecimalField(required=True, decimal_places=3, max_digits=10)
     created = serializers.DateTimeField(read_only=True)
     
     class Meta:
         model = Survivor
-        fields = '__all__'
-
+        exclude = ('localization', 'user', 'id', 'infected')
+        #fields = '__all__'
 
     def create(self, validated_data):
         """
             Create and return a new `Survivor` instance, given the validated data.
         """
-        validated_data['localization'] = Point(float(validated_data['longitude']), 
-                                                float(validated_data['latitude']))
-        return Survivor.objects.create(**validated_data)
+        latitude = float(validated_data.get('latitude', None))
+        longitude = float(validated_data.get('longitude', None))
+        
+        validated_data['localization'] = Point(longitude, latitude)
+        survivor = Survivor(**validated_data)
+        survivor.save()
+
+        return survivor
 
     def update(self, instance, validated_data):
         """
@@ -38,4 +42,5 @@ class SurvivorSerializer(serializers.ModelSerializer):
         instance.localization = Point(float(longitude), float(latitude))
         instance.save()
         return instance
+    
     

@@ -17,6 +17,6 @@ python manage.py migrate
 
 echo "[INFO] Rodando os testes"
 
-python manage.py test
+#python manage.py test --noinput
 
 exec "$@"

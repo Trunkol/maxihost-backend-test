@@ -19,11 +19,14 @@ from rest_framework.authtoken import views
 from rest_framework.routers import DefaultRouter
 
 from survivor.views import SurvivorViewSet
+from users.views import UserViewSet
 
 router = DefaultRouter()
 router.register(r'survivor', SurvivorViewSet, basename='survivors')
+router.register(r'users', UserViewSet, basename='users')
 
 urlpatterns = [
     url(r'^api-token-auth/', views.obtain_auth_token),
-    path('api/', include(router.urls))
+    path('api/v1/', include(router.urls)),
+
 ]
