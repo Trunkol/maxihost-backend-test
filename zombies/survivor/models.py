@@ -1,5 +1,6 @@
-from django.db import models
+from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.db import models as postgis_models
+from django.db import models
 from users.models import User
 
 class Survivor(models.Model):
@@ -17,6 +18,11 @@ class Survivor(models.Model):
         if infected_times > 2:
             self.infected = True
             self.save()
+
+    def get_nearest(self):
+        queries = Survivor.objects.exclude(id=self.pk)\
+                    .annotate(distance=Distance(self.localization, 'localization'))\
+                    .order_by('distance').first()
         
 class InfectedSurvivor(models.Model):
     reported_by = models.ForeignKey(Survivor, on_delete=models.CASCADE, related_name='reported_by')

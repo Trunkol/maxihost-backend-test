@@ -77,3 +77,23 @@ class SurvivorTest(APITestCase):
 
         survivor = Survivor.objects.get(user__username='survivor1')
         self.assertEqual(survivor.infected, True)
+
+    def test_infect_a_survivor_double_times_by_same(self):
+        survivor = Survivor.objects.get(user__username='survivor1')
+        self.assertEqual(survivor.infected, False)
+        for username in ('survivor2', 'survivor2'):
+            token = Token.objects.get(user__username=username)
+            self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+            response = self.client.post(f'/api/v1/survivor/{survivor.pk}/infect/',
+                                        data={},
+                                        format='json')        
+        self.assertEqual(response.status_code, status.HTTP_412_PRECONDITION_FAILED)
+
+    def test_get_nearest_survivor(self):
+        survivor = Survivor.objects.get(name='survivor-sp')
+        response = self.client.get(f'/api/v1/survivor/{survivor.pk}/closest/',
+                                    format='json')       
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        
+        
+    
