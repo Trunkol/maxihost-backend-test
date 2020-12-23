@@ -14,11 +14,14 @@ class SurvivorSerializer(serializers.Serializer):
     class Meta:
         model = Survivor
         exclude = ('localization', 'user')
-        
+    
     def create(self, validated_data):
         """
             Create and return a new `Survivor` instance, given the validated data.
         """
+        if Survivor.objects.filter(user=self.context['request'].user).exists():
+            raise serializers.ValidationError('This user already have a related survivor')
+        
         latitude = float(validated_data.get('latitude', None))
         longitude = float(validated_data.get('longitude', None))
         
