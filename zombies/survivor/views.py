@@ -1,18 +1,33 @@
 from rest_framework.decorators import permission_classes, action
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import viewsets
-from survivor.models import Survivor
+from rest_framework import viewsets, status
+from survivor.models import Survivor, InfectedSurvivor
 from survivor.serializers import SurvivorSerializer
+from .permissions import IsOwnerOrReadOnly
 
 class SurvivorViewSet(viewsets.ModelViewSet):
     queryset = Survivor.objects.all()
     serializer_class = SurvivorSerializer
-    permission_classes = [IsAuthenticated]
-
-    @action(detail=True, methods=['post'])
-    def infect(self, request, pk=None):
-        return pk
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
     
-    @action(detail=True, methods=['get'])
+    @action(detail=True, methods=['POST'])
     def infect(self, request, pk=None):
+        try:
+            survivor_infected = Survivor.objects.get(pk=pk)
+        except Survivor.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        reported_by = Survivor.objects.filter(user=request.user).first()
+        
+        InfectedSurvivor.objects.create(reported_by=reported_by, 
+                                        survivor_infected=survivor_infected)
+
+        survivor_infected.evaluate_infection()
+
+        return Response(status=status.HTTP_201_CREATED)
+
+            
+    @action(detail=True, methods=['GET'])
+    def closest(self, request, pk=None):
         return pk

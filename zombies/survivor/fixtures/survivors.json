@@ -1,0 +1,79 @@
+[{
+	"model": "survivor.survivor",
+	"pk": 1,
+	"fields": {
+		"name": "survivor-sp",
+		"gender": "M",
+		"localization": "SRID=4326;POINT (-46.633 -23.55)",
+		"infected": false,
+		"created": "2020-12-23T02:28:39.671Z",
+		"latitude": "-23.550000",
+		"longitude": "-46.633000",
+		"user": 1
+	}
+}, {
+	"model": "survivor.survivor",
+	"pk": 2,
+	"fields": {
+		"name": "survivor-beijing",
+		"gender": "M",
+		"localization": "SRID=4326;POINT (116.391 39.905)",
+		"infected": false,
+		"created": "2020-12-23T02:28:39.990Z",
+		"latitude": "39.905000",
+		"longitude": "116.391000",
+		"user": 2
+	}
+}, {
+	"model": "survivor.survivor",
+	"pk": 3,
+	"fields": {
+		"name": "survivor-barcelona",
+		"gender": "F",
+		"localization": "SRID=4326;POINT (2.176 41.382)",
+		"infected": false,
+		"created": "2020-12-23T02:28:40.244Z",
+		"latitude": "41.382000",
+		"longitude": "2.176000",
+		"user": 3
+	}
+}, {
+	"model": "survivor.survivor",
+	"pk": 4,
+	"fields": {
+		"name": "survivor-brasilia",
+		"gender": "F",
+		"localization": "SRID=4326;POINT (-48.077 -15.774)",
+		"infected": false,
+		"created": "2020-12-23T02:28:40.503Z",
+		"latitude": "-15.774000",
+		"longitude": "-48.077000",
+		"user": 4
+	}
+}, {
+	"model": "survivor.survivor",
+	"pk": 5,
+	"fields": {
+		"name": "survivor-rj",
+		"gender": "F",
+		"localization": "SRID=4326;POINT (-43.196 -22.908)",
+		"infected": false,
+		"created": "2020-12-23T02:28:40.784Z",
+		"latitude": "-22.908000",
+		"longitude": "-43.196000",
+		"user": 5
+	}
+}, {
+	"model": "survivor.survivor",
+	"pk": 6,
+	"fields": {
+		"name": "survivor-natal",
+		"gender": "M",
+		"localization": "SRID=4326;POINT (-60.269 -6.983)",
+		"infected": false,
+		"created": "2020-12-23T02:28:41.050Z",
+		"latitude": "-6.983000",
+		"longitude": "-60.269000",
+		"user": 6
+	}
+}]

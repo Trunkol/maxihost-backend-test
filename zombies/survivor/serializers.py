@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from survivor.models import Survivor
 from django.contrib.gis.geos import Point
-from django.contrib.auth.models import User
 
 class SurvivorSerializer(serializers.Serializer):
     name = serializers.CharField(required=True)
@@ -9,10 +8,12 @@ class SurvivorSerializer(serializers.Serializer):
     latitude = serializers.DecimalField(required=True, decimal_places=3, max_digits=10)
     longitude = serializers.DecimalField(required=True, decimal_places=3, max_digits=10)
     created = serializers.DateTimeField(read_only=True)
+    infected = serializers.BooleanField(read_only=True)
+    id = serializers.IntegerField(read_only=True)
     
     class Meta:
         model = Survivor
-        exclude = ('localization', 'user', 'id', 'infected')
+        exclude = ('localization', 'user')
         
     def create(self, validated_data):
         """
