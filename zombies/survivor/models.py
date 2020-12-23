@@ -19,7 +19,7 @@ class Survivor(models.Model):
             self.infected = True
             self.save()
 
-    def get_nearest(self):
+    def get_closest(self):
         return Survivor.objects.exclude(id=self.pk)\
                     .annotate(distance=Distance(self.localization, 'localization'))\
                     .order_by('distance').first()

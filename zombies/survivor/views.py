@@ -8,7 +8,6 @@ from survivor.models import Survivor, InfectedSurvivor
 from survivor.serializers import SurvivorSerializer
 from .permissions import IsOwnerOrReadOnly
 
-
 class SurvivorViewSet(viewsets.ModelViewSet):
     queryset = Survivor.objects.all()
     serializer_class = SurvivorSerializer
@@ -33,6 +32,6 @@ class SurvivorViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['GET'])
     def closest(self, request, pk=None):
         survivor = get_object_or_404(Survivor, pk=pk)
-        survivor_nearest = survivor.get_nearest()
+        survivor_nearest = survivor.get_closest()
         serialized = SurvivorSerializer(survivor_nearest)
         return Response(serialized.data)
