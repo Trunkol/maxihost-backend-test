@@ -13,8 +13,7 @@ class SurvivorSerializer(serializers.Serializer):
     class Meta:
         model = Survivor
         exclude = ('localization', 'user', 'id', 'infected')
-        #fields = '__all__'
-
+        
     def create(self, validated_data):
         """
             Create and return a new `Survivor` instance, given the validated data.
@@ -23,9 +22,9 @@ class SurvivorSerializer(serializers.Serializer):
         longitude = float(validated_data.get('longitude', None))
         
         validated_data['localization'] = Point(longitude, latitude)
-        survivor = Survivor(**validated_data)
-        survivor.save()
-
+        validated_data['user'] = self.context['request'].user
+        survivor = Survivor.objects.create(**validated_data)
+        
         return survivor
 
     def update(self, instance, validated_data):

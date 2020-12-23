@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     
     'survivor',
+    'users',
     'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -88,6 +89,7 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = "users.User"
 
 
 # Password validation

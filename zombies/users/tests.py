@@ -6,10 +6,6 @@ from django.core.exceptions import ValidationError
 from rest_framework.authtoken.models import Token
 
 class UserTest(APITestCase):
-    
-    def setUp(self) -> None:
-        pass
-
     def test_create_valid_user(self):
         payload = {"username": "survivor-tokyo",                         
                     "password": "123",
@@ -18,9 +14,6 @@ class UserTest(APITestCase):
         response = self.client.post('/api/v1/users/',
                                     data=payload,
                                     format='json')
-        token = Token.objects.get(user__username="survivor-tokyo")
-        
-        print(token)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_create_invalid_survivor(self):

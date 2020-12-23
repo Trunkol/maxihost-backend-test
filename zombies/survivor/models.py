@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.gis.db import models as postgis_models
-from django.contrib.auth.models import User
+from users.models import User
 
 class Survivor(models.Model):
     name = models.TextField("Name")

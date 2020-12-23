@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.urls import path, include
 from django.conf.urls import url
-from rest_framework.authtoken import views
+from rest_framework.authtoken import views as auth_views
 from rest_framework.routers import DefaultRouter
 
 from survivor.views import SurvivorViewSet
@@ -26,7 +26,6 @@ router.register(r'survivor', SurvivorViewSet, basename='survivors')
 router.register(r'users', UserViewSet, basename='users')
 
 urlpatterns = [
-    url(r'^api-token-auth/', views.obtain_auth_token),
+    url(r'^api-token-auth/', auth_views.obtain_auth_token),
     path('api/v1/', include(router.urls)),
-
 ]
