@@ -92,8 +92,11 @@ class SurvivorTest(APITestCase):
     def test_get_nearest_survivor(self):
         survivor = Survivor.objects.get(name='survivor-sp')
         response = self.client.get(f'/api/v1/survivor/{survivor.pk}/closest/',
-                                    format='json')       
+                                    format='json')
+        print(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual('survivor-rj', response.json()['name'])
+
         
         
     

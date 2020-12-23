@@ -20,7 +20,7 @@ class Survivor(models.Model):
             self.save()
 
     def get_nearest(self):
-        queries = Survivor.objects.exclude(id=self.pk)\
+        return Survivor.objects.exclude(id=self.pk)\
                     .annotate(distance=Distance(self.localization, 'localization'))\
                     .order_by('distance').first()
         

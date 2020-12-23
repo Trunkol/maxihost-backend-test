@@ -1,5 +1,6 @@
 from django.db import IntegrityError, transaction
 from rest_framework.decorators import permission_classes, action
+from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets, status
@@ -16,11 +17,7 @@ class SurvivorViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['POST'])
     @transaction.atomic
     def infect(self, request, pk=None):
-        try:
-            survivor_infected = Survivor.objects.get(pk=pk)
-        except Survivor.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
+        survivor_infected = get_object_or_404(Survivor, pk=pk)
         reported_by = Survivor.objects.filter(user=request.user).first()
         
         try:
@@ -35,9 +32,7 @@ class SurvivorViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['GET'])
     def closest(self, request, pk=None):
-        try:
-            survivor = Survivor.objects.get(pk=pk)
-        except Survivor.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-            
-        return Response(data=survivor.get_nearest(), status=status.HTTP_200_OK)
+        survivor = get_object_or_404(Survivor, pk=pk)
+        survivor_nearest = survivor.get_nearest()
+        serialized = SurvivorSerializer(survivor_nearest)
+        return Response(serialized.data)
