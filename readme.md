@@ -75,7 +75,7 @@ http POST http://localhost:8000/api/v1/survivor/{id}/infect/ 'Authorization: Tok
 
 To get the nearest survivor, run:
 ```shell script
-http POST http://localhost:8000/api/v1/survivor/{id}/closest/ 'Authorization: Token {token}
+http GET http://localhost:8000/api/v1/survivor/{id}/closest/ 'Authorization: Token {token}
 ```
 
 ### Testsuite
